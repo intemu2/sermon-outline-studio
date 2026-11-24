@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sermon Outline Studio — From Scripture to a preachable outline in a minute</title>
+<meta name="description" content="Sermon Outline Studio turns a Bible passage and a topic into a structured, preachable sermon outline — with the verse text, three main points, illustrations, application, discussion questions and a closing prayer. AI drafts. The pastor decides.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">&#10022;</span>
+      <div>
+        <strong>Sermon Outline Studio</strong>
+        <span class="brand-sub">From Scripture to a preachable outline in a minute</span>
+      </div>
+    </div>
+    <nav class="topnav">
+      <a href="#builder">Builder</a>
+      <a href="#how">How it works</a>
+      <a href="#library">My outlines</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow">AI for Church Hackathon 2026 &middot; Discipleship &amp; Spiritual Growth</p>
+    <h1>Pastors spend 10&ndash;20 hours a week on sermon prep.<br>This gives them the first hour back.</h1>
+    <p class="lede">Type a passage and a topic. Sermon Outline Studio fetches the Scripture text, then drafts a complete, structured outline: a big idea, three main points with illustrations and application, discussion questions, and a closing prayer. You edit, you verify, you preach.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#builder">Build an outline</a>
+      <button class="btn btn-ghost" id="heroExample" type="button">Try John 3:16 &rarr;</button>
+    </div>
+    <p class="trust">Free &middot; No account &middot; No data leaves your browser except the verse lookup and, only if you choose it, your own AI key</p>
+  </section>
+
+  <section class="builder" id="builder">
+    <form id="outlineForm" class="panel" autocomplete="off">
+      <h2>1 &middot; Your sermon</h2>
+
+      <label class="field">
+        <span class="label">Scripture passage <span class="req">*</span></span>
+        <input id="passage" type="text" placeholder="e.g. John 3:16, Psalm 23, Romans 8:28" value="John 3:16" required>
+        <span class="hint">Any reference the Bible API understands &mdash; single verses, ranges, whole chapters.</span>
+      </label>
+
+      <div class="field-row">
+        <label class="field">
+          <span class="label">Sermon topic / title idea</span>
+          <input id="topic" type="text" placeholder="e.g. The love of God" value="The love of God">
+        </label>
+        <label class="field">
+          <span class="label">Bible translation</span>
+          <select id="translation">
+            <option value="web" selected>WEB &mdash; World English Bible</option>
+            <option value="kjv">KJV &mdash; King James Version</option>
+            <option value="asv">ASV &mdash; American Standard Version</option>
+            <option value="bbe">BBE &mdash; Bible in Basic English</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="field-row">
+        <label class="field">
+          <span class="label">Audience</span>
+          <select id="audience">
+            <option value="Sunday congregation" selected>Sunday congregation</option>
+            <option value="Youth group">Youth group</option>
+            <option value="Small group">Small group</option>
+            <option value="New believers">New believers</option>
+            <option value="Seekers and guests">Seekers and guests</option>
+          </select>
+        </label>
+        <label class="field">
+          <span class="label">Sermon length</span>
+          <select id="length">
+            <option value="20">About 20 minutes</option>
+            <option value="30" selected>About 30 minutes</option>
+            <option value="45">About 45 minutes</option>
+          </select>
+        </label>
+        <label class="field">
+          <span class="label">Tone</span>
+          <select id="tone">
+            <option value="Warm and encouraging" selected>Warm and encouraging</option>
+            <option value="Pastoral and gentle">Pastoral and gentle</option>
+            <option value="Bold and challenging">Bold and challenging</option>
+            <option value="Reflective and quiet">Reflective and quiet</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="examples">
+        <span class="examples-label">Try one:</span>
+        <button type="button" class="chip" data-example="John 3:16|The love of God">John 3:16</button>
+        <button type="button" class="chip" data-example="Psalm 23|The Lord is my shepherd">Psalm 23</button>
+        <button type="button" class="chip" data-example="Romans 8:28|God works all things for good">Romans 8:28</button>
+        <button type="button" class="chip" data-example="Luke 15:11-24|The Father who runs">Luke 15:11&ndash;24</button>
+        <button type="button" class="chip" data-example="Philippians 4:13|Strength in Christ">Philippians 4:13</button>
+      </div>
+
+      <button class="btn btn-primary btn-big" type="submit" id="generateBtn">Generate outline</button>
+      <p class="fineprint">Instant outline runs on-device &mdash; no key, no sign-up, no waiting. It is a draft, not a sermon: check every verse in your own Bible before you preach.</p>
+    </form>
+
+    <div class="panel result" id="resultPanel" aria-live="polite">
+      <div class="result-empty" id="resultEmpty">
+        <p class="result-empty-mark" aria-hidden="true">&#10022;</p>
+        <h2>Your outline will appear here</h2>
+        <p>Press <strong>Generate outline</strong> and in a few seconds you will have a title, a big idea, three points, illustrations, application steps, discussion questions and a closing prayer &mdash; ready to copy, print or download.</p>
+        <ul class="empty-list">
+          <li>Scripture text fetched live from the Bible API</li>
+          <li>Ten well-known passages get hand-written, passage-specific points</li>
+          <li>Any other passage or topic gets a structured outline built from its theme</li>
+        </ul>
+      </div>
+      <div class="result-body" id="resultBody" hidden></div>
+    </div>
+  </section>
+
+  <section class="ai-panel panel" id="aiPanel">
+    <h2>2 &middot; Optional: enhance with a real LLM</h2>
+    <p>The instant outline above is enough to preach from. If you want richer wording, add your own free <a href="https://console.groq.com/keys" target="_blank" rel="noopener">Groq API key</a> (free tier, no card) and the app will ask the model to sharpen the points &mdash; keeping the same Scripture and structure. Your key is stored only in this browser and is sent only to Groq, never to us.</p>
+    <div class="field-row">
+      <label class="field">
+        <span class="label">Groq API key (optional, stored locally)</span>
+        <input id="apiKey" type="password" placeholder="gsk_..." autocomplete="off">
+      </label>
+      <label class="field">
+        <span class="label">Model</span>
+        <input id="apiModel" type="text" value="openai/gpt-oss-120b">
+      </label>
+    </div>
+    <div class="ai-actions">
+      <button class="btn btn-secondary" id="enhanceBtn" type="button" disabled>Enhance the current outline with AI</button>
+      <button class="btn btn-ghost" id="forgetKeyBtn" type="button">Forget my key</button>
+      <span class="ai-status" id="aiStatus" role="status"></span>
+    </div>
+  </section>
+
+  <section class="how panel" id="how">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><strong>You bring the passage.</strong> The app fetches the exact verse text so the outline is anchored in Scripture, not in a model&rsquo;s memory.</li>
+      <li><strong>The outline engine drafts.</strong> Ten familiar passages have hand-written points; any other passage gets a faithful three-point structure built from its theme and your topic.</li>
+      <li><strong>You decide.</strong> Edit anything, verify every reference, then copy, download or print. The pastor preaches &mdash; the tool only drafts.</li>
+    </ol>
+    <p class="faith-note"><strong>Faithfulness &amp; responsible AI:</strong> AI can misquote Scripture and flatten meaning. That is why the verse text comes from a Bible API, the outline always shows its references, and nothing is presented as finished preaching. Human review is part of the workflow, not an afterthought. No congregant data is collected &mdash; everything is stored only in your own browser.</p>
+  </section>
+
+  <section class="library panel" id="library">
+    <div class="library-head">
+      <h2>My outlines</h2>
+      <button class="btn btn-ghost btn-small" id="clearLibraryBtn" type="button">Clear saved outlines</button>
+    </div>
+    <p class="muted">Saved only in this browser (localStorage). Nothing is uploaded anywhere.</p>
+    <ul class="library-list" id="libraryList"></ul>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p><strong>Sermon Outline Studio</strong> &mdash; built November 2026 for the AI for Church Hackathon 2026 (build window 30 Oct &ndash; 27 Nov 2026). Scripture text via <a href="https://bible-api.com/" target="_blank" rel="noopener">bible-api.com</a>. Open source (MIT).</p>
+    <p class="muted">&ldquo;Preach the word; be ready in season and out of season.&rdquo; &mdash; 2 Timothy 4:2</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
